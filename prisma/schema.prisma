@@ -10,25 +10,52 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
+model Personaje{
   id           Int      @id @default(autoincrement())
-  email        String   @unique
-  password     String
-  name         String?
-  phone_number String?
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-
-  @@map("users")
+  imagen       String  
+  nombre       String?
+  edad         Int
+  historia     String
+  //Películas o series asociadas.
+  //pelicula     Pelicula? @relation(fields: [peliculaId], references: [id])
+  //peliculaId   PersonajePelicula[]
+  pelicula Pelicula[]
+  @@map("personaje")
 }
 
-model Character {
-  id        Int      @id @default(autoincrement())
-  name      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+// model PersonajePelicula{
+//   id                   Int @id @default(autoincrement())
+//   personaje Personaje? @relation(fields: [personajeId], references: [id])
+//   pelicula Pelicula?   @relation(fields: [peliculaId], references: [id])
+//   personajeId          Int?
+//   peliculaId           Int?
+// }
 
-  @@map("characters")
+model Pelicula{
+  id Int      @id @default(autoincrement())
+  imagen  String 
+  titulo  String
+  fecha_creacion  DateTime @default(now())
+  calificacion  Int
+  //Personajes asociados.
+  //personajeId PersonajePelicula[]
+  personaje Personaje[]
+//////////////////////////////////////
+  author Genero @relation(fields: [peliculaId], references: [id])
+  peliculaId Int 
+///////////////////////////////////////
+  @@map("pelicula")
 }
+
+model Genero{
+  id  Int @id @default(autoincrement())
+  nombre String
+  Imagen String
+  //Películas o series asociadas.
+  pelicula Pelicula[]
+  @@map("genero")
+
+}
+
 
 
