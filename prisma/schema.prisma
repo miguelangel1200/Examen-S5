@@ -46,15 +46,15 @@ model Personaje{
 model Pelicula{
   id Int      @id @default(autoincrement())
   imagen  String 
-  titulo  String
+  titulo  String      
   fecha_creacion  DateTime @default(now())
-  calificacion  Int
+  calificacion  String
   //Personajes asociados.
   //personajeId PersonajePelicula[]
   personaje Personaje[]
 //////////////////////////////////////
-  author Genero? @relation(fields: [peliculaId], references: [id])
-  peliculaId Int 
+  author Genero? @relation(fields: [generoId], references: [id])
+  generoId Int 
 ///////////////////////////////////////
   @@map("pelicula")
 }
