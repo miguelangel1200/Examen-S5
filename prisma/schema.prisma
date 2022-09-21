@@ -10,6 +10,17 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id           Int      @id @default(autoincrement())
+  email        String   @unique
+  password     String
+  name         String?
+  phone_number String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  @@map("users")
+}
+
 model Personaje{
   id           Int      @id @default(autoincrement())
   imagen       String  
@@ -36,7 +47,7 @@ model Pelicula{
   imagen  String 
   titulo  String
   fecha_creacion  DateTime @default(now())
-  calificacion  Int
+  calificacion  String
   //Personajes asociados.
   //personajeId PersonajePelicula[]
   personaje Personaje[]

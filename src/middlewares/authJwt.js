@@ -13,12 +13,14 @@ export const verifyToken = async (req, res, next) => {
         //verifica si el token de usuario existe y recupera el id del usuario
         const decoded = jwt.verify(token, config.SECRET)
         req.userId = decoded.id
-
+        
         //obtiene los datos del usuario por el token, menos la contraseña
 
         //const user = await User.findById(req.userId, {password: 0})
         const user = await prisma.user.findUnique({
-            where: req.userId
+            where: {
+                id: req.userId,
+            }
         })
         if (!user) return res.status(404).json({message: "Usuario no encontrado"})
         next()
