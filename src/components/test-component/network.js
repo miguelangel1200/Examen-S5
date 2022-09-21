@@ -8,6 +8,6 @@ testRouter.route("/").get(Controller.findAll);
 testRouter.route("/signup").post(Controller.create);
 testRouter.route("/signin").post(Controller.login);
 
-testRouter.route("/prueba",[authJwt.verifyToken]).get(Controller.prueba);
+testRouter.get("/prueba" ,[authJwt.verifyToken], Controller.prueba);
 
 export default testRouter;

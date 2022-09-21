@@ -10,6 +10,18 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id           Int      @id @default(autoincrement())
+  email        String   @unique
+  password     String
+  name         String?
+  phone_number String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("users")
+}
+
 model Personaje{
   id           Int      @id @default(autoincrement())
   imagen       String  
@@ -41,7 +53,7 @@ model Pelicula{
   //personajeId PersonajePelicula[]
   personaje Personaje[]
 //////////////////////////////////////
-  author Genero @relation(fields: [peliculaId], references: [id])
+  author Genero? @relation(fields: [peliculaId], references: [id])
   peliculaId Int 
 ///////////////////////////////////////
   @@map("pelicula")
