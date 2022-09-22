@@ -34,16 +34,65 @@ export const findQueryNameCharacter = async (req, res) => {
 
 export const findAllCharacters = async (req, res) => {
     try {
-        const characters = await prisma.personaje.findMany({
-            select: {
-                imagen: true,
-                nombre: true
-            }
-        })
-        res.json({
-            ok: true,
-            data: characters,
-        })
+        const {name,age,movie} = req.query
+        let almacenar;
+        //console.log("la edad es",age)
+        if(name){
+            const searchname = await prisma.personaje.findMany({
+                where: {nombre: name, },
+                select: {
+                    nombre:true,
+                    imagen:true,
+                    edad:true,
+                    historia:true
+                }
+            })
+            almacenar = searchname
+
+        }else if(age){
+            //console.log("la edad es",age)
+            const searchage = await prisma.personaje.findMany({
+                where: {edad: Number(age), },
+                select: {
+                    nombre:true,
+                    imagen:true,
+                    edad:true,
+                    historia:true
+                }
+            })
+            almacenar = searchage
+
+        }else if(movie){
+            const searchmovie = await prisma.personaje.findMany({
+                where: {id: Number(movie), },
+                select: {
+                    nombre:true,
+                    imagen:true,
+                    edad:true,
+                    historia:true,
+                    pelicula: {
+                        select:{
+                            titulo: true
+                        }
+                    }
+                }
+            })
+            almacenar = searchmovie
+        }else{
+            const characters = await prisma.personaje.findMany({
+                select: {
+                    imagen: true,
+                    nombre: true,
+                    edad:true,
+                    historia:true
+                }
+            })
+            almacenar = characters
+        }
+        
+        return res.json(
+            almacenar,
+        )
     } catch (error) {
         res.json({
             ok: false,
