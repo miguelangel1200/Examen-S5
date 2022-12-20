@@ -103,3 +103,7 @@ export const prueba = async (req, res) => {
     })
   }
 }
+
+export const test = async (req, res) => {
+  console.log("funciona")
+}
