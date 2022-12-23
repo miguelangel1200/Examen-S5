@@ -107,3 +107,7 @@ export const prueba = async (req, res) => {
 export const test = async (req, res) => {
   console.log("funciona")
 }
+
+export const test1 = async (req, res) => {
+  console.log("prueba 1")
+}
